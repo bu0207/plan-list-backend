@@ -9,8 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.bnt.user</groupId>
-    <artifactId>plan-list-user</artifactId>
+    <groupId>com.bnt.core</groupId>
+    <artifactId>plan-list-core</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

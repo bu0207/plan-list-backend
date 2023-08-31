@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @create 2023/8/30 17:30 bnt
  * @history
  */
-@FeignClient(name = "plan-list-core")
+@FeignClient(name = "plan-list-core", fallback = OrderFeignHandler.class)
 @Component
 public interface OrderFeign {
     @GetMapping("order/getOrderNo")

@@ -16,9 +16,10 @@ import org.springframework.stereotype.Service;
 public class OrderServiceImpl implements OrderService {
     @Override
     public String getOrderNo(String userId) {
-        if (StrUtil.isNotEmpty(userId) && userId.equals("mdx123456")) {
+        if (StrUtil.isNotEmpty(userId) && userId.equals("123456")) {
             return "O111222333444";
+        } else {
+            throw new RuntimeException("订单不存在");
         }
-        return "订单不存在";
     }
 }

@@ -1,5 +1,7 @@
 package com.bnt.user.controller;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.bnt.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,7 +36,24 @@ public class HelloWordController {
     }
 
     @GetMapping("getOrderNo")
+    @SentinelResource(value = "getOrderNoResource", blockHandler = "getOrderNoBlockHandler", blockHandlerClass = HelloWordController.class)
     public String getOrderNo(String userId) {
         return userService.getOrderNo(userId);
+    }
+
+    /**
+     * 限流后续操作方法
+     *
+     * @param e
+     * @return
+     */
+    public static String getOrderNoBlockHandler(String userId, BlockException e) {
+        String msg = "不好意思，前方拥挤，请您稍后再试";
+        return msg;
+    }
+
+    @GetMapping("sentinelB")
+    public String sentinelB() {
+        return "我是关联接口";
     }
 }

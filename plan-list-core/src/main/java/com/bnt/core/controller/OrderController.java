@@ -17,5 +17,16 @@ public class OrderController {
     public String getOrderNo(String userId){
         return orderService.getOrderNo(userId);
     }
+
+    /**
+     * 测试负载均衡
+     *
+     * @return
+     */
+    @GetMapping("lb")
+    public String lb() {
+        System.out.println("test lb");
+        return "lb";
+    }
 }
 

@@ -5,6 +5,7 @@
         <module>plan-list-user</module>
         <module>plan-list-core</module>
         <module>plan-list-common</module>
+        <module>plan-list-gateway</module>
     </modules>
 
     <parent>

@@ -16,6 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(name = "plan-list-core", fallback = OrderFeignHandler.class)
 @Component
 public interface OrderFeign {
-    @GetMapping("order/getOrderNo")
+    @GetMapping("core/order/getOrderNo")
     String getOrderNo(@RequestParam String userId);
 }

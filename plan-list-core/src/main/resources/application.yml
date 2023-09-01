@@ -1,6 +1,7 @@
 server:
   port: 9091
-
+  servlet:
+    context-path: /core
 spring:
   application:
     name: plan-list-core

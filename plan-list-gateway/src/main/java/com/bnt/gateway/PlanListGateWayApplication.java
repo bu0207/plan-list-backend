@@ -14,6 +14,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 @SpringBootApplication
 @EnableFeignClients
+//@EnableDiscoveryClient
 public class PlanListGateWayApplication {
     public static void main(String[] args) {
         SpringApplication.run(PlanListGateWayApplication.class, args);

@@ -2,12 +2,14 @@ package com.bnt.user.controller;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
+import com.bnt.user.sentinelhandler.UserSentinelResourceHandler;
 import com.bnt.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -55,5 +57,32 @@ public class HelloWordController {
     @GetMapping("sentinelB")
     public String sentinelB() {
         return "我是关联接口";
+    }
+
+    @GetMapping("sentinelA")
+    @SentinelResource(value = "sentinelAResource", fallback = "sentinelAResource", fallbackClass = UserSentinelResourceHandler.class)
+    public String sentinelA() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("我是sentinelA");
+        return "我是sentinelA";
+    }
+
+    /**
+     * 测试centinel热点规则限流
+     *
+     * @param userId
+     * @param shopId
+     * @return
+     */
+    @GetMapping("/hotspot")
+    @SentinelResource(value = "hotspotResource", blockHandler = "hotspotResource", blockHandlerClass = UserSentinelResourceHandler.class)
+    public String hotspot(@RequestParam(value = "userId", required = false) String userId,
+                          @RequestParam(value = "shopId", required = false) String shopId) {
+        System.out.println("我是hotspot");
+        return "我是hotspot";
     }
 }

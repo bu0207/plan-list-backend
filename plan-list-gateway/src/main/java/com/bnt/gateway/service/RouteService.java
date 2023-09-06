@@ -2,6 +2,8 @@ package com.bnt.gateway.service;
 
 import org.springframework.cloud.gateway.route.RouteDefinition;
 
+import java.util.List;
+
 /**
  * 路由配置服务
  *
@@ -24,4 +26,8 @@ public interface RouteService {
      * @param routeDefinition
      */
     void add(RouteDefinition routeDefinition);
+
+    void delete(RouteDefinition routeDefinition);
+
+    String updateList(List<RouteDefinition> definitions);
 }

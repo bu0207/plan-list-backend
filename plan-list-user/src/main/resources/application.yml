@@ -6,6 +6,12 @@ server:
 spring:
   application:
     name: plan-list-user
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://127.0.0.1:3306/plan_list?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: fivefu
   cloud:
     nacos:
       discovery:
@@ -14,7 +20,36 @@ spring:
     sentinel:
       transport:
         dashboard: 127.0.0.1:8080  # Sentinel 控制台
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    jedis:
+      pool:
+        max-active: 100
+        max-idle: 3
+        max-wait: -1
+        min-idle: 0
+    timeout: 2000
 # 打开 sentinel 对 feign 的支持
 feign:
   sentinel:
     enabled: true
+
+# jwt 的配置
+jwt:
+  tokenHeader: Authorization
+  secret: bnt-secrt000001
+  expiration: 604800 #秒 7天
+  prefix: Bearer
+
+# mybatis-plus 配置
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: isDelete # 全局逻辑删除的实体字段名
+      logic-delete-value: 1 # 逻辑已删除值（默认为 1）
+      logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）

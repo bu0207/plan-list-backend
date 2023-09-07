@@ -1,7 +1,7 @@
 package com.bnt.common.exception;
 
 
-import com.bnt.user.common.ErrorCode;
+import com.bnt.common.common.ErrorCode;
 
 /**
  * 抛异常工具类

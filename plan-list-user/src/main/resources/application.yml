@@ -6,6 +6,8 @@ server:
 spring:
   application:
     name: plan-list-user
+#  main:
+#    allow-circular-references: true #2.6.0后默认不允许 允许循环依赖
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource

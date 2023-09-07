@@ -1,17 +1,15 @@
 package com.bnt.common.exception;
 
-import com.bnt.user.common.BaseResponse;
-import com.bnt.user.common.ErrorCode;
-import com.bnt.user.common.ResultUtils;
+
+import com.bnt.common.common.BaseResponse;
+import com.bnt.common.common.ErrorCode;
+import com.bnt.common.common.ResultUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
  * 全局异常处理器
- *
- *  
- *  
  */
 @RestControllerAdvice
 @Slf4j

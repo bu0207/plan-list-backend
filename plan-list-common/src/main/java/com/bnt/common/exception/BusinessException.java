@@ -1,13 +1,10 @@
 package com.bnt.common.exception;
 
 
-import com.bnt.user.common.ErrorCode;
+import com.bnt.common.common.ErrorCode;
 
 /**
  * 自定义异常类
- *
- *  
- *  
  */
 public class BusinessException extends RuntimeException {
 
@@ -24,6 +21,11 @@ public class BusinessException extends RuntimeException {
     public BusinessException(ErrorCode errorCode) {
         super(errorCode.getMessage());
         this.code = errorCode.getCode();
+    }
+
+    public BusinessException(String message) {
+        super(message);
+        this.code = ErrorCode.ERROR_CODE.getCode();
     }
 
     public BusinessException(ErrorCode errorCode, String message) {

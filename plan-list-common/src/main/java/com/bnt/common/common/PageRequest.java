@@ -1,6 +1,6 @@
 package com.bnt.common.common;
 
-import com.bnt.user.constant.CommonConstant;
+import com.bnt.common.constant.CommonConstant;
 import lombok.Data;
 
 /**

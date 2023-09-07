@@ -31,4 +31,6 @@ public interface UserConstant {
     String BAN_ROLE = "ban";
 
     // endregion
+
+    String USER_TOKEN_KEY_REDIS = "user_token_key";
 }

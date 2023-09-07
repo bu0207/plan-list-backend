@@ -1,6 +1,9 @@
 package com.bnt.user.model.vo;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,6 +15,9 @@ import java.util.Date;
  *  
  **/
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class LoginUserVO implements Serializable {
 
     /**

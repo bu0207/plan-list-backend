@@ -1,6 +1,7 @@
 package com.bnt.user.service.impl;
 
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bnt.common.constant.UserConstant;
 import com.bnt.common.exception.BusinessException;
@@ -48,7 +49,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public LoginUserVO login(UserLoginRequest loginRequest) {
         String userName = loginRequest.getUserName();
-        User user = baseMapper.findByUserName(userName);
+        User user = baseMapper.selectOne(new QueryWrapper<User>().lambda().eq(User::getUserName, userName));
         if (user == null) {
             throw new BusinessException("用户不存在");
         }

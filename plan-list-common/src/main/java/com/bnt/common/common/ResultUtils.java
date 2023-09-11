@@ -20,6 +20,16 @@ public class ResultUtils {
     }
 
     /**
+     * 成功
+     *
+     * @param <T>
+     * @return
+     */
+    public static <T> BaseResponse<T> success() {
+        return new BaseResponse<>(0, null, "ok");
+    }
+
+    /**
      * 失败
      *
      * @param errorCode

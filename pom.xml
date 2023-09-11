@@ -6,6 +6,7 @@
         <module>plan-list-core</module>
         <module>plan-list-common</module>
         <module>plan-list-gateway</module>
+        <module>plan-list-storage</module>
     </modules>
 
     <parent>
@@ -69,7 +70,7 @@
             <artifactId>spring-cloud-dependencies</artifactId>
             <version>${spring-cloud.version}</version>
             <type>pom</type>
-            <scope>import</scope>
+            <scope>compile</scope>
         </dependency>
         <!--SpringCloud Alibaba-->
         <dependency>
@@ -77,7 +78,7 @@
             <artifactId>spring-cloud-alibaba-dependencies</artifactId>
             <version>${spring-cloud-alibaba.version}</version>
             <type>pom</type>
-            <scope>import</scope>
+            <scope>compile</scope>
         </dependency>
         <!--Nacos 服务注册与发现-->
         <dependency>

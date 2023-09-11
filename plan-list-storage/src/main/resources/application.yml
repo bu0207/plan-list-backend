@@ -1,10 +1,11 @@
 server:
-  port: 9091
+  port: 9092
   servlet:
-    context-path: /core
+    context-path: /storage
+
 spring:
   application:
-    name: plan-list-core
+    name: plan-list-storage
   cloud:
     nacos:
       discovery:
@@ -13,7 +14,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://127.0.0.1:3306/plan_list?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://127.0.0.1:3306/plan_list_storage?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
     password: fivefu
 
@@ -27,8 +28,3 @@ seata:
       server-addr: localhost:8848
       group: DEFAULT_GROUP
       namespace: plan-list-dev #注册在nacos命名空间
-
-# 打开sentinel对feign的支持
-feign:
-  sentinel:
-    enabled: false

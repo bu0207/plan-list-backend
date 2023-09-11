@@ -32,5 +32,5 @@ public interface UserConstant {
 
     // endregion
 
-    String USER_TOKEN_KEY_REDIS = "user_token_key";
+    String USER_TOKEN_KEY_REDIS = "user_token_key:";
 }

@@ -1,6 +1,5 @@
 package com.bnt.plan;
 
-import io.seata.spring.annotation.datasource.EnableAutoDataSourceProxy;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -14,7 +13,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @history
  */
 @SpringBootApplication
-@EnableAutoDataSourceProxy
 public class PlanListStorageApplication {
     public static void main(String[] args) {
         SpringApplication.run(PlanListStorageApplication.class, args);

@@ -10,7 +10,6 @@ import com.bnt.plan.service.StorageTblService;
 import io.seata.core.context.RootContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -31,7 +30,6 @@ public class StorageTblServiceImpl extends ServiceImpl<StorageTblMapper, Storage
      * @param count
      */
     @Override
-    @Transactional
     public void deduct(String commodityCode, int count) {
         System.out.println("事务id---------------------->" + RootContext.getXID());
         StorageTbl storageTbl = baseMapper.selectOne(new QueryWrapper<StorageTbl>().lambda()

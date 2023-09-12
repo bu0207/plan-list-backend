@@ -10,7 +10,6 @@ import io.seata.core.context.RootContext;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -38,8 +37,7 @@ public class OrderTblServiceImpl extends ServiceImpl<OrderTblMapper, OrderTbl> i
      */
     @Override
     @GlobalTransactional
-    @Transactional
-    public String createOrder(String userId, String commodityCode) {
+        public String createOrder(String userId, String commodityCode) {
 
         System.out.println("事务id---------------------->" + RootContext.getXID());
         // 创建订单
@@ -55,7 +53,6 @@ public class OrderTblServiceImpl extends ServiceImpl<OrderTblMapper, OrderTbl> i
         // 扣减库存
         storageFeign.deduct(commodityCode, orderTbl.getCount());
 
-//            int a = 1/0;
 
         return "success";
 

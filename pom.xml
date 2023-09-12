@@ -38,6 +38,7 @@
         <mybatis-plus.version>3.5.3.2</mybatis-plus.version>
         <jjwt.version>0.9.1</jjwt.version>
         <knife4j.version>4.0.0</knife4j.version>
+        <logstash-logback.version>5.3</logstash-logback.version>
     </properties>
 
     <dependencyManagement>
@@ -101,6 +102,12 @@
                 <groupId>com.bnt.plan</groupId>
                 <artifactId>plan-list-mbg</artifactId>
                 <version>${plan-list-mbg.version}</version>
+            </dependency>
+            <!--集成logstash-->
+            <dependency>
+                <groupId>net.logstash.logback</groupId>
+                <artifactId>logstash-logback-encoder</artifactId>
+                <version>${logstash-logback.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -7,6 +7,7 @@
         <module>plan-list-common</module>
         <module>plan-list-gateway</module>
         <module>plan-list-storage</module>
+        <module>plan-list-mbg</module>
     </modules>
 
     <parent>
@@ -15,7 +16,7 @@
         <version>2.6.3</version>
     </parent>
 
-    <groupId>com.bnt</groupId>
+    <groupId>com.bnt.plan</groupId>
     <artifactId>plan-list</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -29,6 +30,7 @@
         <spring-cloud.version>2021.0.1</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.0.1.0</spring-cloud-alibaba.version>
         <plan-list-common.version>1.0-SNAPSHOT</plan-list-common.version>
+        <plan-list-mbg.version>1.0-SNAPSHOT</plan-list-mbg.version>
         <fastjson.version>1.2.78</fastjson.version>
         <utool-all.version>5.8.20</utool-all.version>
         <guava.version>30.1-jre</guava.version>
@@ -56,7 +58,7 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>com.bnt.common</groupId>
+                <groupId>com.bnt.plan</groupId>
                 <artifactId>plan-list-common</artifactId>
                 <version>${plan-list-common.version}</version>
             </dependency>
@@ -94,6 +96,11 @@
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-openapi2-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.bnt.plan</groupId>
+                <artifactId>plan-list-mbg</artifactId>
+                <version>${plan-list-mbg.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

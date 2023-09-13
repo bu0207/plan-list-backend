@@ -8,6 +8,7 @@
         <module>plan-list-gateway</module>
         <module>plan-list-storage</module>
         <module>plan-list-mbg</module>
+        <module>plan-list-job</module>
     </modules>
 
     <parent>
@@ -39,6 +40,7 @@
         <jjwt.version>0.9.1</jjwt.version>
         <knife4j.version>4.0.0</knife4j.version>
         <logstash-logback.version>5.3</logstash-logback.version>
+        <xxl-job-core.version>2.3.1</xxl-job-core.version>
     </properties>
 
     <dependencyManagement>
@@ -109,6 +111,26 @@
                 <artifactId>logstash-logback-encoder</artifactId>
                 <version>${logstash-logback.version}</version>
             </dependency>
+            <!-- XXL-JOB 相关依赖 -->
+            <dependency>
+                <groupId>com.xuxueli</groupId>
+                <artifactId>xxl-job-core</artifactId>
+                <version>${xxl-job-core.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <!-- 使用 huawei / aliyun 的 Maven 源，提升下载速度 -->
+    <repositories>
+        <repository>
+            <id>huaweicloud</id>
+            <name>huawei</name>
+            <url>https://mirrors.huaweicloud.com/repository/maven/</url>
+        </repository>
+        <repository>
+            <id>aliyunmaven</id>
+            <name>aliyun</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+        </repository>
+    </repositories>
 </project>

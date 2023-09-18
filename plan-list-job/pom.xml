@@ -22,9 +22,14 @@
             <groupId>com.bnt.plan</groupId>
             <artifactId>plan-list-common</artifactId>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.bnt.plan</groupId>-->
+<!--            <artifactId>plan-list-mbg</artifactId>-->
+<!--        </dependency>-->
+        <!-- xxl-job-core -->
         <dependency>
-            <groupId>com.bnt.plan</groupId>
-            <artifactId>plan-list-mbg</artifactId>
+            <groupId>com.xuxueli</groupId>
+            <artifactId>xxl-job-core</artifactId>
         </dependency>
     </dependencies>
 </project>

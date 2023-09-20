@@ -6,7 +6,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.bnt.plan.config.NotAuthUrlProperties;
 import com.bnt.plan.constant.UserConstant;
 import com.bnt.plan.service.RedisService;
-import com.bnt.plan.utils.JWTProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

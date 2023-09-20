@@ -12,7 +12,6 @@ import com.bnt.plan.model.entity.User;
 import com.bnt.plan.model.vo.LoginUserVO;
 import com.bnt.plan.service.RedisService;
 import com.bnt.plan.service.UserService;
-import com.bnt.plan.utils.JWTProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

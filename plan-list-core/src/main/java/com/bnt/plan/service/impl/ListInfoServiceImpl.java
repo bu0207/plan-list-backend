@@ -3,6 +3,7 @@ package com.bnt.plan.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bnt.plan.mapper.ListInfoMapper;
 import com.bnt.plan.model.entity.ListInfo;
+import com.bnt.plan.model.vo.ListInfoReqVO;
 import com.bnt.plan.service.ListInfoService;
 import org.springframework.stereotype.Service;
 
@@ -17,4 +18,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class ListInfoServiceImpl extends ServiceImpl<ListInfoMapper, ListInfo> implements ListInfoService {
 
+    @Override
+    public String add(ListInfoReqVO listInfoReqVO) {
+        ListInfo listInfo = new ListInfo();
+        listInfo.setListName(listInfoReqVO.getListName());
+        listInfo.setListColor(listInfoReqVO.getListColor());
+        listInfo.setListType(listInfoReqVO.getListType());
+        baseMapper.insert(listInfo);
+        return listInfo.getId();
+    }
 }

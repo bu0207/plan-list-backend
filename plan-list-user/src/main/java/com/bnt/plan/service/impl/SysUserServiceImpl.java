@@ -42,11 +42,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private RedisService redisService;
 
     @Override
-    public String getOrderNo(String userId) {
-        return orderFeign.getOrderNo(userId);
-    }
-
-    @Override
     public LoginUserVO loginByPas(UserLoginRequest loginRequest) {
         String userName = loginRequest.getUserName();
         SysUser user = baseMapper.selectOne(new QueryWrapper<SysUser>().lambda().eq(SysUser::getUsername, userName));

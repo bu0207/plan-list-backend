@@ -1,16 +1,16 @@
 package com.bnt.plan.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.bnt.plan.model.entity.TaskInfo;
+import com.bnt.plan.entity.ListMember;
 
 /**
  * <p>
- * 任务表 服务类
+ * 清单成员表 服务类
  * </p>
  *
  * @author bnt
  * @since 2023-09-22
  */
-public interface TaskInfoService extends IService<TaskInfo> {
+public interface ListMemberService extends IService<ListMember> {
 
 }

@@ -43,4 +43,4 @@ jwt:
 allowed:
   gateway:
     paths:
-      - /user/user/login
+      - /user/login/loginByPas

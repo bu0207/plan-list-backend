@@ -3,8 +3,6 @@ package com.bnt.plan.controller;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.bnt.plan.sentinelhandler.UserSentinelResourceHandler;
-import com.bnt.plan.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,8 +26,8 @@ public class HelloWordController {
     @Value("${user.switch_on_off}")
     private String switchOnOff;
 
-    @Autowired
-    private UserService userService;
+//    @Autowired
+//    private UserService userService;
 
 
     @GetMapping("getUserSwitch")
@@ -37,11 +35,11 @@ public class HelloWordController {
         return switchOnOff != null ? switchOnOff : "未获取到配置";
     }
 
-    @GetMapping("getOrderNo")
-    @SentinelResource(value = "getOrderNoResource", blockHandler = "getOrderNoBlockHandler", blockHandlerClass = HelloWordController.class)
-    public String getOrderNo(String userId) {
-        return userService.getOrderNo(userId);
-    }
+//    @GetMapping("getOrderNo")
+//    @SentinelResource(value = "getOrderNoResource", blockHandler = "getOrderNoBlockHandler", blockHandlerClass = HelloWordController.class)
+//    public String getOrderNo(String userId) {
+//        return userService.getOrderNo(userId);
+//    }
 
     /**
      * 限流后续操作方法

@@ -6,27 +6,28 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bnt.plan.constant.UserConstant;
 import com.bnt.plan.exception.BusinessException;
 import com.bnt.plan.feign.OrderFeign;
-import com.bnt.plan.mapper.UserMapper;
+import com.bnt.plan.mapper.SysUserMapper;
 import com.bnt.plan.model.dto.user.UserLoginRequest;
-import com.bnt.plan.model.entity.User;
+import com.bnt.plan.model.entity.SysUser;
 import com.bnt.plan.model.vo.LoginUserVO;
 import com.bnt.plan.service.RedisService;
-import com.bnt.plan.service.UserService;
+import com.bnt.plan.service.SysUserService;
+import com.bnt.plan.utils.JWTProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
- * TODO
+ * <p>
+ * 系统用户表 服务实现类
+ * </p>
  *
  * @author bnt
- * @version 1.0.0
- * @create 2023/8/30 17:12 bnt
- * @history
+ * @since 2023-09-22
  */
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
 
     @Value("${jwt.prefix}")
     private String prefix;
@@ -46,9 +47,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public LoginUserVO login(UserLoginRequest loginRequest) {
+    public LoginUserVO loginByPas(UserLoginRequest loginRequest) {
         String userName = loginRequest.getUserName();
-        User user = baseMapper.selectOne(new QueryWrapper<User>().lambda().eq(User::getUserName, userName));
+        SysUser user = baseMapper.selectOne(new QueryWrapper<SysUser>().lambda().eq(SysUser::getUsername, userName));
         if (user == null) {
             throw new BusinessException("用户不存在");
         }
@@ -64,7 +65,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 将token存入redis
         redisService.set(UserConstant.USER_TOKEN_KEY_REDIS + userName, token, 604800);
 
-        return LoginUserVO.builder().userName(userName).id(user.getUserId()).token(prefix + " " + token).build();
+        return LoginUserVO.builder().userName(userName).id(user.getId()).token(prefix + " " + token).build();
     }
 
     public static void main(String[] args) {

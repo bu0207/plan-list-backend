@@ -1,8 +1,8 @@
 package com.bnt.plan.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.bnt.plan.entity.TaskInfo;
 import com.bnt.plan.mapper.TaskInfoMapper;
+import com.bnt.plan.model.entity.TaskInfo;
 import com.bnt.plan.service.TaskInfoService;
 import org.springframework.stereotype.Service;
 

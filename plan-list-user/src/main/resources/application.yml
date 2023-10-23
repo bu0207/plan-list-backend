@@ -31,6 +31,12 @@ spring:
         max-wait: -1
         min-idle: 0
     timeout: 2000
+  # Spring Security 配置项，对应 SecurityProperties 配置类
+  security:
+    user:
+      name: user
+      password: user
+      roles: ADMIN
 # 打开 sentinel 对 feign 的支持
 feign:
   sentinel:

@@ -1,7 +1,7 @@
 package com.bnt.plan.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.bnt.plan.entity.TaskInfo;
+import com.bnt.plan.model.entity.TaskInfo;
 
 /**
  * <p>

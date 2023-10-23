@@ -44,7 +44,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public LoginUserVO loginByPas(UserLoginRequest loginRequest) {
         String userName = loginRequest.getUserName();
-        SysUser user = baseMapper.selectOne(new QueryWrapper<SysUser>().lambda().eq(SysUser::getUsername, userName));
+        SysUser user = baseMapper.selectOne(new QueryWrapper<SysUser>().lambda().eq(SysUser::getUserName, userName));
         if (user == null) {
             throw new BusinessException("用户不存在");
         }

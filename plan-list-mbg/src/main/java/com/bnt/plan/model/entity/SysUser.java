@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author bnt
- * @since 2023-09-22
+ * @since 2023-10-23
  */
 @Getter
 @Setter
@@ -27,7 +27,7 @@ public class SysUser implements Serializable {
 
     @ApiModelProperty("主键")
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private String id;
+    private Long id;
 
     @ApiModelProperty("创建时间")
     @TableField(value = "create_date", fill = FieldFill.INSERT)
@@ -49,25 +49,57 @@ public class SysUser implements Serializable {
     @TableField(value = "del_flag", fill = FieldFill.INSERT)
     private String delFlag;
 
-    @ApiModelProperty("用户名")
-    @TableField("username")
-    private String username;
+    @ApiModelProperty("部门ID")
+    @TableField("dept_id")
+    private String deptId;
 
-    @ApiModelProperty("密码")
-    @TableField("password")
-    private String password;
+    @ApiModelProperty("用户名")
+    @TableField("user_name")
+    private String userName;
 
     @ApiModelProperty("昵称")
     @TableField("nick_name")
     private String nickName;
 
-    @ApiModelProperty("手机号")
-    @TableField("mobile")
-    private String mobile;
+    @ApiModelProperty("密码")
+    @TableField("password")
+    private String password;
 
-    @ApiModelProperty("状态")
+    @ApiModelProperty("用户类型（00系统用户）")
+    @TableField("user_type")
+    private String userType;
+
+    @ApiModelProperty("邮箱")
+    @TableField("email")
+    private String email;
+
+    @ApiModelProperty("手机号")
+    @TableField("phone")
+    private String phone;
+
+    @ApiModelProperty("状态;（0正常 1停用）")
     @TableField("status")
     private String status;
+
+    @ApiModelProperty("用户性别（0男 1女 2未知）")
+    @TableField("sex")
+    private String sex;
+
+    @ApiModelProperty("头像地址")
+    @TableField("avatar")
+    private String avatar;
+
+    @ApiModelProperty("最后登录IP")
+    @TableField("last_login_ip")
+    private String lastLoginIp;
+
+    @ApiModelProperty("上次登录时间")
+    @TableField("last_login_time")
+    private LocalDateTime lastLoginTime;
+
+    @ApiModelProperty("备注")
+    @TableField("remark")
+    private String remark;
 
 
 }

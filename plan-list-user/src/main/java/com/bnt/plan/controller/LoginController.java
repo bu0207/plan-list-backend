@@ -36,4 +36,10 @@ public class LoginController {
     public BaseResponse<LoginUserVO> loginByPas(@RequestBody UserLoginRequest loginRequest) {
         return ResultUtils.success(userService.loginByPas(loginRequest));
     }
+
+    @PostMapping("login")
+    public BaseResponse login(@RequestBody UserLoginRequest loginRequest) {
+        String login = userService.login(loginRequest);
+        return ResultUtils.success(login);
+    }
 }

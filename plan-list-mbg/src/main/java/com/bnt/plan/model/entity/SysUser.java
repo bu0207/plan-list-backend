@@ -6,8 +6,10 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.beans.Transient;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * <p>
@@ -100,6 +102,34 @@ public class SysUser implements Serializable {
     @ApiModelProperty("备注")
     @TableField("remark")
     private String remark;
+
+    /**
+     * 部门对象
+     */
+    @Excels({
+            @Excel(name = "部门名称", targetAttr = "deptName", type = Type.EXPORT),
+            @Excel(name = "部门负责人", targetAttr = "leader", type = Type.EXPORT)
+    })
+    @Transient
+    private SysDept dept;
+
+    /**
+     * 角色对象
+     */
+    @Transient
+    private List<SysRole> roles;
+
+    /**
+     * 角色组
+     */
+    @Transient
+    private Long[] roleIds;
+
+    /**
+     * 岗位组
+     */
+    @Transient
+    private Long[] postIds;
 
 
 }

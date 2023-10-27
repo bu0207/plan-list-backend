@@ -14,4 +14,10 @@ public class UserLoginRequest {
 
     @ApiModelProperty(value = "密码")
     private String userPassword;
+
+    @ApiModelProperty(value = "验证码")
+    private String code;
+
+    @ApiModelProperty(value = "唯一标识")
+    private String uuid;
 }

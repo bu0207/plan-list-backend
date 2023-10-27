@@ -15,4 +15,19 @@ import com.bnt.plan.model.vo.LoginUserVO;
  */
 public interface SysUserService extends IService<SysUser> {
     public LoginUserVO loginByPas(UserLoginRequest loginRequest);
+
+    /**
+     * 登录验证
+     *
+     * @param loginRequest
+     * @return
+     */
+    public String login(UserLoginRequest loginRequest);
+
+    /**
+     * 查询指定用户名对应的 SysUser
+     * @param userName
+     * @return
+     */
+    SysUser selectUserByUserName(String userName);
 }

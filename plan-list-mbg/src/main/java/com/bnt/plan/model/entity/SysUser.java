@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.beans.Transient;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,8 +27,8 @@ public class SysUser implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("主键")
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
+    @TableId(value = "user_id", type = IdType.ASSIGN_ID)
+    private Long userId;
 
     @ApiModelProperty("创建时间")
     @TableField(value = "create_date", fill = FieldFill.INSERT)
@@ -79,7 +78,7 @@ public class SysUser implements Serializable {
     @TableField("phone")
     private String phone;
 
-    @ApiModelProperty("状态;（0正常 1停用）")
+    @ApiModelProperty("状态;（0正常 2停用）")
     @TableField("status")
     private String status;
 
@@ -106,30 +105,33 @@ public class SysUser implements Serializable {
     /**
      * 部门对象
      */
-    @Excels({
-            @Excel(name = "部门名称", targetAttr = "deptName", type = Type.EXPORT),
-            @Excel(name = "部门负责人", targetAttr = "leader", type = Type.EXPORT)
-    })
-    @Transient
+    @TableField(exist = false)
     private SysDept dept;
 
     /**
      * 角色对象
      */
-    @Transient
+    @TableField(exist = false)
     private List<SysRole> roles;
 
     /**
      * 角色组
      */
-    @Transient
+    @TableField(exist = false)
     private Long[] roleIds;
 
     /**
      * 岗位组
      */
-    @Transient
+    @TableField(exist = false)
     private Long[] postIds;
 
 
+    public boolean isAdmin() {
+        return isAdmin(this.userId);
+    }
+
+    public static boolean isAdmin(Long userId) {
+        return userId != null && 1L == userId;
+    }
 }

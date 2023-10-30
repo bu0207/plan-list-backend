@@ -3,6 +3,7 @@ package com.bnt.plan.service.impl;
 import com.bnt.plan.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import java.util.concurrent.TimeUnit;
  * redis操作实现类
  * Created by macro on 2020/3/3.
  */
+@SuppressWarnings(value = {"unchecked", "rawtypes"})
 public class RedisServiceImpl implements RedisService {
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
@@ -193,5 +195,45 @@ public class RedisServiceImpl implements RedisService {
     @Override
     public Long lRemove(String key, long count, Object value) {
         return redisTemplate.opsForList().remove(key, count, value);
+    }
+
+    /**
+     * 获得缓存的基本对象。
+     *
+     * @param key 缓存键值
+     * @return 缓存键值对应的数据
+     */
+    @Override
+    public <T> T getCacheObject(String key) {
+        ValueOperations<String, T> stringObjectValueOperations = (ValueOperations<String, T>) redisTemplate.opsForValue();
+        return stringObjectValueOperations.get(key);
+    }
+
+    /**
+     * 缓存基本的对象，Integer、String、实体类等
+     *
+     * @param key   缓存的键值
+     * @param value 缓存的值
+     * @return 缓存的对象
+     */
+    public <T> ValueOperations<String, T> setCacheObject(String key, T value) {
+        ValueOperations<String, T> operation = (ValueOperations<String, T>) redisTemplate.opsForValue();
+        operation.set(key, value);
+        return operation;
+    }
+
+    /**
+     * 缓存基本的对象，Integer、String、实体类等
+     *
+     * @param key 缓存的键值
+     * @param value 缓存的值
+     * @param timeout 时间
+     * @param timeUnit 时间颗粒度
+     * @return 缓存的对象
+     */
+    public <T> ValueOperations<String, T> setCacheObject(String key, T value, Integer timeout, TimeUnit timeUnit) {
+        ValueOperations<String, T> operation = (ValueOperations<String, T>) redisTemplate.opsForValue();
+        operation.set(key, value, timeout, timeUnit);
+        return operation;
     }
 }

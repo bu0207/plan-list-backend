@@ -1,4 +1,4 @@
-package com.bnt.plan.userdetail;
+package com.bnt.plan.userdetail.filter;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;

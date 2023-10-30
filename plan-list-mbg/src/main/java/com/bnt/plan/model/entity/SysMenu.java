@@ -26,8 +26,8 @@ public class SysMenu implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("主键")
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
+    @TableId(value = "menu_id", type = IdType.ASSIGN_ID)
+    private Long menuId;
 
     @ApiModelProperty("创建时间")
     @TableField(value = "create_date", fill = FieldFill.INSERT)

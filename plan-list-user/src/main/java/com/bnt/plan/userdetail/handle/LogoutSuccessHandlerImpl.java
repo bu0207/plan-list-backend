@@ -1,4 +1,4 @@
-package com.bnt.plan.userdetail;
+package com.bnt.plan.userdetail.handle;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;

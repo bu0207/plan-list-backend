@@ -12,6 +12,7 @@ import com.bnt.plan.model.entity.SysUser;
 import com.bnt.plan.model.vo.LoginUserVO;
 import com.bnt.plan.service.RedisService;
 import com.bnt.plan.service.SysUserService;
+import com.bnt.plan.userdetail.service.TokenService;
 import com.bnt.plan.utils.JWTProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +20,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.token.TokenService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -73,7 +73,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         // 将token存入redis
         redisService.set(UserConstant.USER_TOKEN_KEY_REDIS + userName, token, 604800);
 
-        return LoginUserVO.builder().userName(userName).id(user.getId()).token(prefix + " " + token).build();
+        return LoginUserVO.builder().userName(userName).id(user.getUserId()).token(prefix + " " + token).build();
     }
 
     /**
@@ -122,7 +122,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      */
     @Override
     public SysUser selectUserByUserName(String userName) {
-        return baseMapper;
+        return baseMapper.selectUserByUserName(userName);
     }
 
     public static void main(String[] args) {

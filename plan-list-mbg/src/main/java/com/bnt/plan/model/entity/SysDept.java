@@ -11,23 +11,23 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 系统角色表
+ * 部门表
  * </p>
  *
  * @author bnt
- * @since 2023-10-23
+ * @since 2023-10-30
  */
 @Getter
 @Setter
-@TableName("sys_role")
-@ApiModel(value = "SysRole对象", description = "系统角色表")
-public class SysRole implements Serializable {
+@TableName("sys_dept")
+@ApiModel(value = "SysDept对象", description = "部门表")
+public class SysDept implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("主键")
-    @TableId(value = "role_id", type = IdType.ASSIGN_ID)
-    private Long roleId;
+    @TableId(value = "dept_id", type = IdType.ASSIGN_ID)
+    private Long deptId;
 
     @ApiModelProperty("创建时间")
     @TableField(value = "create_date", fill = FieldFill.INSERT)
@@ -49,29 +49,29 @@ public class SysRole implements Serializable {
     @TableField(value = "del_flag", fill = FieldFill.INSERT)
     private String delFlag;
 
-    @ApiModelProperty("角色名称")
-    @TableField("role_name")
-    private String roleName;
+    @ApiModelProperty("父部门ID")
+    @TableField("parent_id")
+    private String parentId;
 
-    @ApiModelProperty("角色权限字符串")
-    @TableField("role_key")
-    private String roleKey;
+    @ApiModelProperty("部门名称")
+    @TableField("dept_name")
+    private String deptName;
 
     @ApiModelProperty("显示顺序")
-    @TableField("role_sort")
-    private Integer roleSort;
+    @TableField("order_num")
+    private String orderNum;
 
-    @ApiModelProperty("数据范围;（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）")
-    @TableField("data_scope")
-    private String dataScope;
+    @ApiModelProperty("负责人")
+    @TableField("leader")
+    private String leader;
 
-    @ApiModelProperty("角色状态;（0正常 1停用）")
-    @TableField("status")
-    private String status;
+    @ApiModelProperty("联系电话")
+    @TableField("phone")
+    private String phone;
 
-    @ApiModelProperty("备注")
-    @TableField("remark")
-    private String remark;
+    @ApiModelProperty("邮箱")
+    @TableField("email")
+    private String email;
 
 
 }

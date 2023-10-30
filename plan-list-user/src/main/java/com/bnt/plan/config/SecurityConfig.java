@@ -1,8 +1,8 @@
 package com.bnt.plan.config;
 
-import com.bnt.plan.userdetail.AuthenticationEntryPointImpl;
-import com.bnt.plan.userdetail.JwtAuthenticationTokenFilter;
-import com.bnt.plan.userdetail.LogoutSuccessHandlerImpl;
+import com.bnt.plan.userdetail.filter.JwtAuthenticationTokenFilter;
+import com.bnt.plan.userdetail.handle.AuthenticationEntryPointImpl;
+import com.bnt.plan.userdetail.handle.LogoutSuccessHandlerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -37,6 +37,10 @@ spring:
       name: user
       password: user
       roles: ADMIN
+  # 资源信息
+  messages:
+    # 国际化资源文件路径
+    basename: i18n/messages
 # 打开 sentinel 对 feign 的支持
 feign:
   sentinel:
@@ -60,3 +64,10 @@ mybatis-plus:
       logic-delete-value: 1 # 逻辑已删除值（默认为 1）
       logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）
   mapper-locations: classpath:mapper/*.xml
+
+# token配置
+token:
+  # 令牌有效期（默认30分钟）
+  expireTime: 30
+  secret: bnt-secrt
+  header: Authorization

@@ -5,6 +5,10 @@ import cn.hutool.core.util.StrUtil;
 import com.bnt.plan.constant.CommonConstant;
 import com.bnt.plan.service.RedisService;
 import com.bnt.plan.userdetail.LoginUser;
+import com.bnt.plan.utils.ServletUtils;
+import com.bnt.plan.utils.ip.AddressUtils;
+import com.bnt.plan.utils.ip.IpUtils;
+import eu.bitwalker.useragentutils.UserAgent;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -62,9 +66,12 @@ public class TokenService {
      * @return
      */
     public LoginUser getLoginUser(HttpServletRequest request) {
+        // <1.1> 获取请求携带的令牌
         String token = getToken(request);
         if (StrUtil.isNotEmpty(token)) {
+            // <1.2> 解析 JWT 的 Token
             Claims claims = parseToken(token);
+            // <1.3> 从 Redis 缓存中，获得对应的 LoginUser
             String uuid = (String) claims.get(CommonConstant.LOGIN_USER_KEY);
             String tokenKey = getTokenKey(uuid);
             return redisService.getCacheObject(tokenKey);
@@ -94,18 +101,41 @@ public class TokenService {
 
     /**
      * 创建令牌
+     * 因为 LoginUser.token 添加到 claims 中，最终生成了 JWT 的 Token 。
+     * 所以，后续我们可以通过解码该 JWT 的 Token ，从而获得 claims ，最终获得到对应的 LoginUser.token 。
+     * 在 JWT 的 Token 中，使用 LoginUser.token 而不是 userId 的好处，可以带来更好的安全性，
+     * 避免万一 secret 秘钥泄露之后，黑客可以顺序生成 userId 从而生成对应的 JWT 的 Token ，后续直接可以操作该用户的数据。
+     * 不过，这么做之后就不是纯粹的 JWT ，解析出来的 LoginUser.token 需要查询对应的 LoginUser 的 Redis 缓存。
      *
      * @param loginUser 用户信息
      * @return 令牌
      */
     public String createToken(LoginUser loginUser) {
+        // <1> 设置 LoginUser 的用户唯一标识。注意，这里虽然变量名叫 token ，其实不是身份认证的 Token
         String token = IdUtil.fastUUID();
         loginUser.setToken(token);
-        // 刷新缓存
+        // <2> 设置用户终端相关的信息，包括 IP、城市、浏览器、操作系统
+        setUserAgent(loginUser);
+        // <3> 记录缓存
         refreshToken(loginUser);
+        // <4> 生成 JWT 的 Token
         Map<String, Object> claims = new HashMap<>();
         claims.put(CommonConstant.LOGIN_USER_KEY, token);
         return createToken(claims);
+    }
+
+    /**
+     * 设置用户代理信息
+     *
+     * @param loginUser 登录信息
+     */
+    public void setUserAgent(LoginUser loginUser) {
+        UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
+        String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
+        loginUser.setIpaddr(ip);
+        loginUser.setLoginLocation(AddressUtils.getRealAddressByIP(ip));
+        loginUser.setBrowser(userAgent.getBrowser().getName());
+        loginUser.setOs(userAgent.getOperatingSystem().getName());
     }
 
     /**
@@ -129,6 +159,8 @@ public class TokenService {
         Long expireTime = loginUser.getExpireTime();
         long l = System.currentTimeMillis();
         if (expireTime - l < MILLIS_MINUTE_TEN) {
+            String token = loginUser.getToken();
+            loginUser.setToken(token);
             refreshToken(loginUser);
         }
     }

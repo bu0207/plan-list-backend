@@ -42,6 +42,7 @@
         <logstash-logback.version>5.3</logstash-logback.version>
         <xxl-job-core.version>2.3.1</xxl-job-core.version>
         <mybatis-plus-generator>3.5.1</mybatis-plus-generator>
+        <UserAgentUtils.version>1.21</UserAgentUtils.version>
     </properties>
 
     <dependencyManagement>
@@ -122,6 +123,12 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-generator</artifactId>
                 <version>${mybatis-plus-generator}</version>
+            </dependency>
+            <!-- UserAgentUtils 解析 User-Agent 字符串 -->
+            <dependency>
+                <groupId>eu.bitwalker</groupId>
+                <artifactId>UserAgentUtils</artifactId>
+                <version>${UserAgentUtils.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

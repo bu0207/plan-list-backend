@@ -3,6 +3,8 @@ package com.bnt.plan.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.bnt.plan.common.ErrorCode;
+import com.bnt.plan.constant.CommonConstant;
 import com.bnt.plan.constant.UserConstant;
 import com.bnt.plan.exception.BusinessException;
 import com.bnt.plan.feign.OrderFeign;
@@ -11,9 +13,12 @@ import com.bnt.plan.model.dto.user.UserLoginRequest;
 import com.bnt.plan.model.entity.SysUser;
 import com.bnt.plan.model.vo.LoginUserVO;
 import com.bnt.plan.service.RedisService;
+import com.bnt.plan.service.SysLogininforService;
 import com.bnt.plan.service.SysUserService;
+import com.bnt.plan.userdetail.LoginUser;
 import com.bnt.plan.userdetail.service.TokenService;
 import com.bnt.plan.utils.JWTProvider;
+import com.bnt.plan.utils.MessageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -54,6 +59,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Resource
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private SysLogininforService logininforService;
+
     @Override
     public LoginUserVO loginByPas(UserLoginRequest loginRequest) {
         String userName = loginRequest.getUserName();
@@ -91,7 +99,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         // 1. 验证图片验证码的
 
         // 2. 用户验证
-        Authentication authentication;
+        Authentication authentication = null;
         try {
             // 该方法会去调用 UserDetailsServiceImpl.loadUserByUsername
             authentication = authenticationManager
@@ -99,19 +107,19 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         } catch (Exception e) {
             // <2.1> 发生异常，说明验证不通过，记录相应的登录失败日志
             if (e instanceof BadCredentialsException) {
-//                AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.password.not.match")));
-//                throw new UserPasswordNotMatchException();
+                logininforService.recordLogininfor(userName, CommonConstant.LOGIN_FAIL, MessageUtils.message("user.password.not.match"));
+                throw new BusinessException(ErrorCode.ERROR_CODE, "用户名或密码错误");
             } else {
-//                AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, e.getMessage()));
-//                throw new CustomException(e.getMessage());
+                logininforService.recordLogininfor(userName, CommonConstant.LOGIN_FAIL, e.getMessage());
+                throw new BusinessException(ErrorCode.ERROR_CODE, e.getMessage());
             }
         }
         // <2.2> 验证通过，记录相应的登录成功日志
+        logininforService.recordLogininfor(userName, CommonConstant.LOGIN_SUCCESS, MessageUtils.message("user.login.success"));
 //        AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
         // <3> 生成 Token
-//        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-//        return tokenService.createToken(loginUser);
-        return null;
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        return tokenService.createToken(loginUser);
     }
 
     /**

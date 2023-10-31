@@ -2,9 +2,6 @@ package com.bnt.plan.common;
 
 /**
  * 返回工具类
- *
- *  
- *  
  */
 public class ResultUtils {
 
@@ -37,6 +34,15 @@ public class ResultUtils {
      */
     public static BaseResponse error(ErrorCode errorCode) {
         return new BaseResponse<>(errorCode);
+    }
+
+    /**
+     * 失败
+     *
+     * @return
+     */
+    public static BaseResponse error(String message) {
+        return new BaseResponse(ErrorCode.ERROR_CODE.getCode(), null, message);
     }
 
     /**

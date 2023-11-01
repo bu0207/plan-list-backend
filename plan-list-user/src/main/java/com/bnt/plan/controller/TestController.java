@@ -1,5 +1,7 @@
 package com.bnt.plan.controller;
 
+import com.bnt.plan.common.BaseResponse;
+import com.bnt.plan.common.ResultUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,5 +35,10 @@ public class TestController {
     @GetMapping("/normal")
     public String normal() {
         return "我是普通用户";
+    }
+
+    @GetMapping("/res")
+    public BaseResponse res() {
+        return ResultUtils.success("响应成功");
     }
 }

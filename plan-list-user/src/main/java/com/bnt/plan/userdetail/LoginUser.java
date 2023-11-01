@@ -89,9 +89,12 @@ public class LoginUser implements UserDetails {
         return user.getUserName();
     }
 
+    /**
+     * 账号没有过期状态(true账号没有过期，false账号已经过期)
+     */
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     /**

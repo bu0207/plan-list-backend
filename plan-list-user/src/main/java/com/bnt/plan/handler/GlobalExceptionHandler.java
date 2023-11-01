@@ -6,9 +6,8 @@ import com.bnt.plan.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,7 +18,7 @@ import java.util.stream.Collectors;
  * @date: 2020/7/27 17:06
  * @version: V1.0
  */
-@ControllerAdvice
+@RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
 
@@ -32,7 +31,6 @@ public class GlobalExceptionHandler {
      * @throws Exception
      */
     @ExceptionHandler({Exception.class})
-    @ResponseBody
     public BaseResponse<String> jsonErrorHandler(Exception e) {
         log.error(e.getMessage(), e);
         return ResultUtils.error("系统异常");
@@ -46,7 +44,6 @@ public class GlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseBody
     public BaseResponse<String> handlerMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         log.error(e.getMessage(), e);
         List<ObjectError> allErrors = e.getBindingResult().getAllErrors();
@@ -62,7 +59,6 @@ public class GlobalExceptionHandler {
      * @return ErrorInfo
      */
     @ExceptionHandler({BusinessException.class})
-    @ResponseBody
     public BaseResponse<String> businessExceptionHandler(BusinessException e) {
         log.error(e.getMessage(), e);
         return ResultUtils.error(e.getMessage());

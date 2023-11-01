@@ -2,7 +2,6 @@ package com.bnt.plan.common;
 
 import lombok.Data;
 
-import java.util.HashMap;
 
 /**
  * 通用返回类
@@ -10,7 +9,7 @@ import java.util.HashMap;
  * @param <T>
  */
 @Data
-public class BaseResponse<T> extends HashMap<String, Object> {
+public class BaseResponse<T>{
 
     private int code;
 

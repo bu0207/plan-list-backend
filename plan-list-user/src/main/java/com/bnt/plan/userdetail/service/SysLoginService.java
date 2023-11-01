@@ -50,18 +50,18 @@ public class SysLoginService {
         String userPassword = loginRequest.getUserPassword();
         String code = loginRequest.getCode();
         String uuid = loginRequest.getUuid();
-        // 1. 验证图片验证码的
-        String captcha = redisService.getCacheObject(CommonConstant.CAPTCHA_CODE_KEY + uuid);
-        if (captcha == null) {
-            // 图片验证码不存在
-            logininforService.recordLogininfor(userName, CommonConstant.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.error"));
-            throw new BusinessException("验证码已失效");
-        }
-        if (!code.equalsIgnoreCase(captcha)) {
-            // 图片验证码不正确
-            logininforService.recordLogininfor(userName, CommonConstant.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.expire"));
-            throw new BusinessException("验证码不正确");
-        }
+//        // 1. 验证图片验证码的
+//        String captcha = redisService.getCacheObject(CommonConstant.CAPTCHA_CODE_KEY + uuid);
+//        if (captcha == null) {
+//            // 图片验证码不存在
+//            logininforService.recordLogininfor(userName, CommonConstant.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.error"));
+//            throw new BusinessException("验证码已失效");
+//        }
+//        if (!code.equalsIgnoreCase(captcha)) {
+//            // 图片验证码不正确
+//            logininforService.recordLogininfor(userName, CommonConstant.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.expire"));
+//            throw new BusinessException("验证码不正确");
+//        }
         // 2. 用户验证
         Authentication authentication = null;
         try {

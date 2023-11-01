@@ -2,7 +2,6 @@ package com.bnt.plan.controller;
 
 import com.bnt.plan.common.BaseResponse;
 import com.bnt.plan.common.ResultUtils;
-import com.bnt.plan.constant.CommonConstant;
 import com.bnt.plan.model.dto.user.UserLoginRequest;
 import com.bnt.plan.model.vo.LoginUserVO;
 import com.bnt.plan.service.SysUserService;
@@ -50,9 +49,7 @@ public class LoginController {
     @ApiOperation(value = "登录", httpMethod = "POST")
     @PostMapping("login")
     public BaseResponse login(@Valid @RequestBody UserLoginRequest loginRequest) {
-        BaseResponse<Object> success = ResultUtils.success();
         String login = sysLoginService.login(loginRequest);
-        success.put(CommonConstant.TOKEN, login);
-        return success;
+        return ResultUtils.success(login);
     }
 }

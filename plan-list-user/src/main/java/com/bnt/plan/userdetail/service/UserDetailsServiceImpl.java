@@ -34,8 +34,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // <1> 查询指定用户名对应的 SysUser
         SysUser user = sysUserService.selectUserByUserName(username);
-        log.info("登录用户{}，不存在", username);
+
         if (user == null) {
+            log.info("登录用户{}，不存在", username);
             throw new UsernameNotFoundException("登录用户：" + username + " 不存在");
         }
         if (StatusEnum.DELETED.getCode().equals(user.getDelFlag())) {

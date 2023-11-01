@@ -94,7 +94,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 // 过滤请求
                 .authorizeRequests()
-                .antMatchers("/login", "/captchaImage").anonymous()
+                .antMatchers("/**/login", "/**/captchaImage").anonymous()
                 .antMatchers(HttpMethod.GET,
                         "/*.html",
                         "/**/*.html",

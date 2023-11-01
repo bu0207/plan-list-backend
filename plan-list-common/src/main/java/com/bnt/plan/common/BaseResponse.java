@@ -2,13 +2,15 @@ package com.bnt.plan.common;
 
 import lombok.Data;
 
+import java.util.HashMap;
+
 /**
  * 通用返回类
  *
  * @param <T>
  */
 @Data
-public class BaseResponse<T> {
+public class BaseResponse<T> extends HashMap<String, Object> {
 
     private int code;
 

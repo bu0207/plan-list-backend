@@ -7,12 +7,16 @@ import com.bnt.plan.model.dto.user.UserLoginRequest;
 import com.bnt.plan.model.vo.LoginUserVO;
 import com.bnt.plan.service.SysUserService;
 import com.bnt.plan.userdetail.service.SysLoginService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 /**
  * 登录
@@ -22,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @create 2023/9/22 15:46 bnt
  * @history
  */
+@Api(tags = "登录")
 @Slf4j
 @RestController
 @RequestMapping("/login")
@@ -42,8 +47,9 @@ public class LoginController {
         return ResultUtils.success(userService.loginByPas(loginRequest));
     }
 
+    @ApiOperation(value = "登录", httpMethod = "POST")
     @PostMapping("login")
-    public BaseResponse login(@RequestBody UserLoginRequest loginRequest) {
+    public BaseResponse login(@Valid @RequestBody UserLoginRequest loginRequest) {
         BaseResponse<Object> success = ResultUtils.success();
         String login = sysLoginService.login(loginRequest);
         success.put(CommonConstant.TOKEN, login);

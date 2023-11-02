@@ -7,6 +7,8 @@ import com.bnt.plan.common.ResultUtils;
 import com.bnt.plan.constant.CommonConstant;
 import com.bnt.plan.service.RedisService;
 import com.bnt.plan.utils.VerifyCodeUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +29,7 @@ import java.util.concurrent.TimeUnit;
  * @create 2023/10/31 17:10 bnt
  * @history
  */
+@Api(tags = "验证码")
 @Slf4j
 @RestController
 @RequestMapping("/captcha")
@@ -37,6 +40,7 @@ public class CaptchaController {
     /**
      * 生成验证码
      */
+    @ApiOperation(value = "生成验证码", httpMethod = "GET")
     @GetMapping("/captchaImage")
     public BaseResponse getCode() throws IOException {
         // 生成随机子串

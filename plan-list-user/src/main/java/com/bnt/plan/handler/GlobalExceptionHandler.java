@@ -3,7 +3,10 @@ package com.bnt.plan.handler;
 import com.bnt.plan.common.BaseResponse;
 import com.bnt.plan.common.ResultUtils;
 import com.bnt.plan.exception.BusinessException;
+import com.bnt.plan.utils.MessageUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -34,6 +37,18 @@ public class GlobalExceptionHandler {
     public BaseResponse<String> jsonErrorHandler(Exception e) {
         log.error(e.getMessage(), e);
         return ResultUtils.error("系统异常");
+    }
+
+    /**
+     * 没有访问权限。使用 @PreAuthorize 校验权限不通过时，就会抛出 AccessDeniedException 异常
+     *
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(AccessDeniedException.class)
+    public BaseResponse handleAuthorizationException(AccessDeniedException e) {
+        log.error(e.getMessage());
+        return ResultUtils.error(HttpStatus.FORBIDDEN.value(), MessageUtils.message("user.no.permission"));
     }
 
 

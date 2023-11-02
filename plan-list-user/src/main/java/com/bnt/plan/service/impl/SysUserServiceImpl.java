@@ -1,5 +1,6 @@
 package com.bnt.plan.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -8,14 +9,20 @@ import com.bnt.plan.exception.BusinessException;
 import com.bnt.plan.mapper.SysUserMapper;
 import com.bnt.plan.model.dto.user.UserLoginRequest;
 import com.bnt.plan.model.entity.SysUser;
+import com.bnt.plan.model.entity.SysUserRole;
 import com.bnt.plan.model.vo.LoginUserVO;
 import com.bnt.plan.service.RedisService;
+import com.bnt.plan.service.SysUserRoleService;
 import com.bnt.plan.service.SysUserService;
 import com.bnt.plan.utils.JWTProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -36,6 +43,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Autowired
     private RedisService redisService;
+    @Autowired
+    private SysUserRoleService sysUserRoleService;
 
     @Override
     public LoginUserVO loginByPas(UserLoginRequest loginRequest) {
@@ -69,6 +78,91 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public SysUser selectUserByUserName(String userName) {
         return baseMapper.selectUserByUserName(userName);
+    }
+
+    /**
+     * 校验用户名称是否唯一
+     *
+     * @param userName 用户名称
+     * @return 结果
+     */
+    @Override
+    public boolean checkUserNameUnique(String userName) {
+        SysUser user = baseMapper.selectOne(new QueryWrapper<SysUser>()
+                .lambda().eq(SysUser::getUserName, userName));
+        return user == null;
+    }
+
+    /**
+     * 校验手机号是否唯一
+     *
+     * @param sysUser 用户信息
+     * @return
+     */
+    @Override
+    public boolean checkPhoneUnique(SysUser sysUser) {
+        SysUser user = baseMapper.selectOne(new QueryWrapper<SysUser>()
+                .lambda().eq(SysUser::getPhone, sysUser.getPhone()));
+        return user == null;
+    }
+
+    /**
+     * 校验email是否唯一
+     *
+     * @param sysUser
+     * @return
+     */
+    @Override
+    public boolean checkEmailUnique(SysUser sysUser) {
+        SysUser user = baseMapper.selectOne(new QueryWrapper<SysUser>()
+                .lambda().eq(SysUser::getEmail, sysUser.getEmail()));
+        return user == null;
+    }
+
+    /**
+     * 新增保存用户信息
+     *
+     * @param sysUser
+     */
+    @Override
+    @Transactional
+    public int insert(SysUser sysUser) {
+        int row = baseMapper.insert(sysUser);
+        insertUserRole(sysUser);
+        return row;
+    }
+
+    /**
+     * 校验用户是否允许操作
+     *
+     * @param sysUser
+     */
+    @Override
+    public void checkUserAllowed(SysUser sysUser) {
+        if (sysUser.getUserId() != null && sysUser.isAdmin()) {
+            throw new BusinessException("不允许操作超级管理员用户");
+        }
+    }
+
+    /**
+     * 新增用户角色信息
+     *
+     * @param user 用户对象
+     */
+    public void insertUserRole(SysUser user) {
+        Long[] roles = user.getRoleIds();
+        if (roles != null && roles.length > 0) {
+            List<SysUserRole> list = new ArrayList<>();
+            for (Long roleId : roles) {
+                SysUserRole sysUserRole = new SysUserRole();
+                sysUserRole.setUserId(user.getUserId());
+                sysUserRole.setRoleId(roleId);
+                list.add(sysUserRole);
+            }
+            if (CollectionUtil.isNotEmpty(list)) {
+                sysUserRoleService.saveBatch(list);
+            }
+        }
     }
 
     public static void main(String[] args) {

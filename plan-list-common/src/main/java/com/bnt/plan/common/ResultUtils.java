@@ -1,5 +1,7 @@
 package com.bnt.plan.common;
 
+import cn.hutool.http.HttpStatus;
+
 /**
  * 返回工具类
  */
@@ -13,7 +15,7 @@ public class ResultUtils {
      * @return
      */
     public static <T> BaseResponse<T> success(T data) {
-        return new BaseResponse<>(0, data, "ok");
+        return new BaseResponse<>(HttpStatus.HTTP_OK, data, "ok");
     }
 
     /**
@@ -23,7 +25,7 @@ public class ResultUtils {
      * @return
      */
     public static <T> BaseResponse<T> success() {
-        return new BaseResponse<>(0, null, "ok");
+        return new BaseResponse<>(HttpStatus.HTTP_OK, null, "ok");
     }
 
     /**

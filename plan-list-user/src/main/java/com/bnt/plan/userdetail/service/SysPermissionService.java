@@ -2,6 +2,7 @@ package com.bnt.plan.userdetail.service;
 
 import com.bnt.plan.model.entity.SysUser;
 import com.bnt.plan.service.SysMenuService;
+import com.bnt.plan.service.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,8 @@ public class SysPermissionService {
 
     @Autowired
     private SysMenuService menuService;
+    @Autowired
+    private SysRoleService roleService;
 
     /**
      * 获取菜单数据权限
@@ -35,6 +38,19 @@ public class SysPermissionService {
             roles.add("*:*:*");
         } else {
             roles.addAll(menuService.selectMenuPermsByUserId(user.getUserId()));
+        }
+        return roles;
+    }
+
+    /**
+     * 获取角色数据权限
+     */
+    public Set<String> getRolePermission(SysUser user) {
+        Set<String> roles = new HashSet<>();
+        if (user.isAdmin()) {
+            roles.add("admin");
+        } else {
+            roles.addAll(roleService.selectRolePermissionByUserId(user.getUserId()));
         }
         return roles;
     }

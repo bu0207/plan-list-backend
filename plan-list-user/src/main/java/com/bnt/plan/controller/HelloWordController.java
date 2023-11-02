@@ -3,6 +3,7 @@ package com.bnt.plan.controller;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.bnt.plan.sentinelhandler.UserSentinelResourceHandler;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @create 2023/8/30 11:34 bnt
  * @history
  */
+@Api(tags = "测试sentinel")
 @RestController
 @RequestMapping("/hello")
 @RefreshScope

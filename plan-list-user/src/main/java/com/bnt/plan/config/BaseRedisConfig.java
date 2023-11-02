@@ -4,6 +4,7 @@ import com.bnt.plan.service.RedisService;
 import com.bnt.plan.service.impl.RedisServiceImpl;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
@@ -53,6 +54,8 @@ public class BaseRedisConfig {
         objectMapper.registerModule(new Jdk8Module())
                 .registerModule(new JavaTimeModule())
                 .registerModule(new ParameterNamesModule());
+        // 配置忽略未知属性
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         serializer.setObjectMapper(objectMapper);
         return serializer;
     }

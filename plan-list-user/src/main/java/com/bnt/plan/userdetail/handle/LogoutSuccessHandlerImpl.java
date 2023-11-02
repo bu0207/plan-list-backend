@@ -6,6 +6,7 @@ import com.bnt.plan.constant.CommonConstant;
 import com.bnt.plan.service.SysLogininforService;
 import com.bnt.plan.userdetail.LoginUser;
 import com.bnt.plan.userdetail.service.TokenService;
+import com.bnt.plan.utils.MessageUtils;
 import com.bnt.plan.utils.ServletUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -45,6 +46,6 @@ public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
             logininforService.recordLogininfor(username, CommonConstant.LOGOUT, "退出成功");
         }
         // 4. 响应退出成功
-        ServletUtils.renderString(response, JSON.toJSONString(new BaseResponse<>(0, null, "退出成功")));
+        ServletUtils.renderString(response, JSON.toJSONString(new BaseResponse<>(0, null, MessageUtils.message("user.logout.success"))));
     }
 }

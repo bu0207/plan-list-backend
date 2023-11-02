@@ -71,3 +71,6 @@ token:
   expireTime: 30
   secret: bnt-secrt
   header: Authorization
+
+bnt:
+  version: 1.0.0

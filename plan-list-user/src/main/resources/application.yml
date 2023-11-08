@@ -9,20 +9,20 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://127.0.0.1:3306/plan_list?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://192.168.29.38:3306/plan_list?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
     password: fivefu
   cloud:
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848 # Nacos服务发现，配置Nacos Server地址
+        server-addr: 192.168.29.38:8848 # Nacos服务发现，配置Nacos Server地址
         namespace: plan-list-dev
     sentinel:
       transport:
-        dashboard: 127.0.0.1:8080  # Sentinel 控制台
+        dashboard: 192.168.29.38:8080  # Sentinel 控制台
   redis:
     database: 0
-    host: 127.0.0.1
+    host: 192.168.29.38
     port: 6379
     jedis:
       pool:

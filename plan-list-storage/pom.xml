@@ -8,8 +8,8 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+    <packaging>jar</packaging>
 
-    <groupId>com.bnt.plan</groupId>
     <artifactId>plan-list-storage</artifactId>
 
     <properties>
@@ -64,10 +64,19 @@
     </dependencies>
 
     <build>
+        <!--多模块打包：只需在启动类所在模块的POM文件：指定打包插件 -->
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <!--可以把依赖的包都打包到生成的Jar包中-->
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

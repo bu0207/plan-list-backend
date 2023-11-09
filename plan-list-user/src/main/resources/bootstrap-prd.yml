@@ -1,8 +1,11 @@
 #bootstrap
-spring.application.name=plan-list-user
-spring.cloud.nacos.config.server-addr=192.168.29.38:8848
-spring.cloud.nacos.config.file-extension=yaml
-spring.cloud.nacos.config.namespace=plan-list-dev
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: 47.103.4.235:8848
+        file-extension: yaml
+        namespace: plan-list-prd
 # extension-configs
 #spring.cloud.nacos.config.extension-configs[0].data-id=plan-list-user.yml
 #spring.cloud.nacos.config.extension-configs[0].group=user

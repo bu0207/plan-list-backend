@@ -100,9 +100,13 @@
                     <imageTags>
                         <imageTag>latest</imageTag>
                     </imageTags>
-                    <dockerDirectory>${project.basedir}</dockerDirectory><!--Dockerfile所在的目录-->
-                    <dockerHost>http://localhost:2375</dockerHost>
-<!--                    <dockerHost>http://47.103.4.235:2375</dockerHost>&lt;!&ndash;docker所在的宿主机地址&ndash;&gt;-->
+                    <!--Dockerfile所在的目录-->
+                    <dockerDirectory>${project.basedir}</dockerDirectory>
+                    <!--docker所在的宿主机地址-->
+<!--                    <dockerHost>http://localhost:2375</dockerHost>-->
+                    <dockerHost>https://47.103.4.235:2375</dockerHost>
+                    <!--CA证书地址-->
+                    <dockerCertPath>D:\programming\证书\docker远程访问CA证书</dockerCertPath>
                     <resources>
                         <resource><!--这里配置的就是打包后jar所在的位置-->
                             <targetPath>/</targetPath>

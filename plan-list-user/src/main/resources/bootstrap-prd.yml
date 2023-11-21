@@ -1,12 +1,43 @@
-#bootstrap
 spring:
+  application:
+    name: plan-list-user
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://172.19.28.203:33077/plan_list?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: test
+    password: #SNYO75#gJtIYnzfJ#z
   cloud:
     nacos:
       config:
-        server-addr: 47.103.4.235:8848
+        server-addr: 172.19.28.203:8848
         file-extension: yaml
         namespace: plan-list-prd
-# extension-configs
-#spring.cloud.nacos.config.extension-configs[0].data-id=plan-list-user.yml
-#spring.cloud.nacos.config.extension-configs[0].group=user
-#spring.cloud.nacos.config.extension-configs[0].refresh=true
+      discovery:
+        server-addr: 172.19.28.203:8848 # Nacos服务发现，配置Nacos Server地址
+        namespace: plan-list-prd
+    sentinel:
+      transport:
+        dashboard: 172.19.28.203:8080  # Sentinel 控制台
+  redis:
+    database: 0
+    host: 172.19.28.203
+    port: 6380
+    jedis:
+      pool:
+        max-active: 100
+        max-idle: 3
+        max-wait: -1
+        min-idle: 0
+    timeout: 2000
+    password: pzw9d2u2
+  # Spring Security 配置项，对应 SecurityProperties 配置类
+  security:
+    user:
+      name: user
+      password: user
+      roles: ADMIN
+  # 资源信息
+  messages:
+    # 国际化资源文件路径
+    basename: i18n/messages

@@ -4,10 +4,14 @@ import com.bnt.plan.common.ErrorCode;
 import com.bnt.plan.constant.CommonConstant;
 import com.bnt.plan.exception.BusinessException;
 import com.bnt.plan.model.dto.user.UserLoginRequest;
+import com.bnt.plan.model.entity.SysUser;
 import com.bnt.plan.service.RedisService;
 import com.bnt.plan.service.SysLogininforService;
+import com.bnt.plan.service.SysUserService;
 import com.bnt.plan.userdetail.LoginUser;
 import com.bnt.plan.utils.MessageUtils;
+import com.bnt.plan.utils.SecurityUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -25,6 +29,7 @@ import javax.annotation.Resource;
  * @create 2023/11/1 14:30 bnt
  * @history
  */
+@Slf4j
 @Component
 public class SysLoginService {
 
@@ -39,6 +44,8 @@ public class SysLoginService {
 
     @Autowired
     private SysLogininforService logininforService;
+    @Autowired
+    private SysUserService sysUserService;
 
     /**
      * 登录验证
@@ -63,6 +70,14 @@ public class SysLoginService {
             throw new BusinessException("验证码不正确");
         }
         // 2. 用户验证
+        SysUser user = sysUserService.selectUserByUserName(userName);
+        // 用户不存在时默认注册
+        if (user == null) {
+            SysUser sysUser = new SysUser();
+            sysUser.setPassword(SecurityUtils.encryptPassword(userPassword));
+            sysUser.setCreateBy(userName);
+            sysUserService.insert(sysUser);
+        }
         Authentication authentication = null;
         try {
             // 该方法会去调用 UserDetailsServiceImpl.loadUserByUsername

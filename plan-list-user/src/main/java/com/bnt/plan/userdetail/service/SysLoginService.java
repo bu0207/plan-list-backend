@@ -1,5 +1,7 @@
 package com.bnt.plan.userdetail.service;
 
+import cn.hutool.crypto.SecureUtil;
+import cn.hutool.crypto.symmetric.AES;
 import com.bnt.plan.common.ErrorCode;
 import com.bnt.plan.constant.CommonConstant;
 import com.bnt.plan.exception.BusinessException;
@@ -13,6 +15,7 @@ import com.bnt.plan.utils.MessageUtils;
 import com.bnt.plan.utils.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -47,16 +50,21 @@ public class SysLoginService {
     @Autowired
     private SysUserService sysUserService;
 
+    @Value("${public.aesKey}")
+    private String aesKey;
+
     /**
      * 登录验证
      *
      * @return 结果
      */
     public String login(UserLoginRequest loginRequest) {
-        String userName = loginRequest.getUserName();
-        String userPassword = loginRequest.getUserPassword();
+        AES aes = SecureUtil.aes(aesKey.getBytes());
+        String userName = aes.decryptStr(loginRequest.getUserName());
+        String userPassword = aes.decryptStr(loginRequest.getUserPassword());
         String code = loginRequest.getCode();
         String uuid = loginRequest.getUuid();
+
         // 1. 验证图片验证码的
         String captcha = redisService.getCacheObject(CommonConstant.CAPTCHA_CODE_KEY + uuid);
         if (captcha == null) {

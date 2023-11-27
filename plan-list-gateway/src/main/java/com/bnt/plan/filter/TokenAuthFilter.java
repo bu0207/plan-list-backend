@@ -1,10 +1,7 @@
 package com.bnt.plan.filter;
 
-import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.bnt.plan.config.NotAuthUrlProperties;
-import com.bnt.plan.constant.UserConstant;
 import com.bnt.plan.service.RedisService;
 import com.bnt.plan.utils.JWTProvider;
 import lombok.extern.slf4j.Slf4j;
@@ -15,14 +12,12 @@ import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
-import java.util.LinkedHashSet;
 
 /**
  * @author bnt
@@ -54,38 +49,38 @@ public class TokenAuthFilter implements GlobalFilter, Ordered {
         log.info("=========================请求进入TokenAuthFilter=========================");
 
         // 放行接口检查
-        ServerHttpRequest request = exchange.getRequest();
-        String requestPath = request.getURI().getPath();
-
-        boolean allowedPath = false;
-        LinkedHashSet<String> paths = notAuthUrlProperties.getPaths();
-        if (CollectionUtil.isNotEmpty(paths)) {
-            allowedPath = paths.contains(requestPath);
-        }
-        if (allowedPath || StrUtil.isEmpty(requestPath)) {
-            return chain.filter(exchange);
-        }
-
-        // token校验
-        String authHeader = exchange.getRequest().getHeaders().getFirst(tokenHeader);
-        if (StrUtil.isNotEmpty(authHeader) && authHeader.startsWith(prefix)) {
-            String authToken = authHeader.substring(prefix.length());
-            String userName = jwtProvider.getUserNameFromToken(authToken);
-            Object token = redisService.get(UserConstant.USER_TOKEN_KEY_REDIS + userName);
-            if (token == null) {
-                log.error("token验证失败或已过期...");
-                return writeResponse(exchange.getResponse(), 401, "token验证失败或已过期...请重新登录");
-            }
-            // 这里也可以使用 jwtProvider.validateToken() 来验证token,使用redis是因为管理员可以在任意时间将用户token踢出
-            // 去除首尾空格
-            String trimAuthToken = authToken.trim();
-            if (!trimAuthToken.equals(token.toString())) {
-                log.error("token验证失败或已过期...");
-                return writeResponse(exchange.getResponse(), 401, "token验证失败或已过期...请重新登录");
-            }
-        } else {
-            return writeResponse(exchange.getResponse(), 500, "token不存在");
-        }
+//        ServerHttpRequest request = exchange.getRequest();
+//        String requestPath = request.getURI().getPath();
+//
+//        boolean allowedPath = false;
+//        LinkedHashSet<String> paths = notAuthUrlProperties.getPaths();
+//        if (CollectionUtil.isNotEmpty(paths)) {
+//            allowedPath = paths.contains(requestPath);
+//        }
+//        if (allowedPath || StrUtil.isEmpty(requestPath)) {
+//            return chain.filter(exchange);
+//        }
+//
+//        // token校验
+//        String authHeader = exchange.getRequest().getHeaders().getFirst(tokenHeader);
+//        if (StrUtil.isNotEmpty(authHeader) && authHeader.startsWith(prefix)) {
+//            String authToken = authHeader.substring(prefix.length());
+//            String userName = jwtProvider.getUserNameFromToken(authToken);
+//            Object token = redisService.get(UserConstant.USER_TOKEN_KEY_REDIS + userName);
+//            if (token == null) {
+//                log.error("token验证失败或已过期...");
+//                return writeResponse(exchange.getResponse(), 401, "token验证失败或已过期...请重新登录");
+//            }
+//            // 这里也可以使用 jwtProvider.validateToken() 来验证token,使用redis是因为管理员可以在任意时间将用户token踢出
+//            // 去除首尾空格
+//            String trimAuthToken = authToken.trim();
+//            if (!trimAuthToken.equals(token.toString())) {
+//                log.error("token验证失败或已过期...");
+//                return writeResponse(exchange.getResponse(), 401, "token验证失败或已过期...请重新登录");
+//            }
+//        } else {
+//            return writeResponse(exchange.getResponse(), 500, "token不存在");
+//        }
         log.info("token验证成功...");
         return chain.filter(exchange);
     }

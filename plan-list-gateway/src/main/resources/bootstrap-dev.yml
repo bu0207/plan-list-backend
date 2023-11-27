@@ -1,0 +1,31 @@
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: plan-list-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: plan-list-dev
+    gateway:
+      discovery:
+        locator:
+          enabled: true # 开启通过服务中心的自动根据 serviceId 创建路由的功能
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    jedis:
+      pool:
+        max-active: 100
+        max-idle: 3
+        max-wait: -1
+        min-idle: 0
+    timeout: 2000
+gateway:
+  routes:
+    config:
+      data-id: gateway-routes  #动态路由
+      group: DEFAULT_GROUP
+      namespace: plan-list-dev

@@ -2,6 +2,7 @@ package com.bnt.plan.userdetail.service;
 
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.symmetric.AES;
+import com.alibaba.nacos.api.config.annotation.NacosValue;
 import com.bnt.plan.common.ErrorCode;
 import com.bnt.plan.constant.CommonConstant;
 import com.bnt.plan.exception.BusinessException;
@@ -15,7 +16,6 @@ import com.bnt.plan.utils.MessageUtils;
 import com.bnt.plan.utils.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -50,7 +50,7 @@ public class SysLoginService {
     @Autowired
     private SysUserService sysUserService;
 
-    @Value("${public.aesKey}")
+    @NacosValue(value = "${public.aesKey}", autoRefreshed = true)
     private String aesKey;
 
     /**
@@ -60,7 +60,7 @@ public class SysLoginService {
      */
     public String login(UserLoginRequest loginRequest) {
         AES aes = SecureUtil.aes(aesKey.getBytes());
-        String userName = aes.decryptStr(loginRequest.getUserName());
+        String userName = loginRequest.getUserName();
         String userPassword = aes.decryptStr(loginRequest.getUserPassword());
         String code = loginRequest.getCode();
         String uuid = loginRequest.getUuid();

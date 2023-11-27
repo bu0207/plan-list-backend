@@ -1,7 +1,5 @@
 package com.bnt.plan.controller;
 
-import cn.hutool.crypto.SecureUtil;
-import cn.hutool.crypto.symmetric.AES;
 import com.bnt.plan.common.BaseResponse;
 import com.bnt.plan.common.ResultUtils;
 import com.bnt.plan.model.dto.user.UserInfoRes;
@@ -16,7 +14,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -42,8 +39,6 @@ public class LoginController {
     private TokenService tokenService;
     @Autowired
     private SysPermissionService sysPermissionService;
-    @Value("${public.aesKey}")
-    private String aesKey;
 
     @ApiOperation(value = "登录", httpMethod = "POST")
     @PostMapping("login")
@@ -63,9 +58,6 @@ public class LoginController {
         // <1> 获得当前 LoginUser
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         SysUser user = loginUser.getUser();
-        AES aes = SecureUtil.aes(aesKey.getBytes());
-        String userName = aes.encryptHex(user.getUserName());
-        user.setUserName(userName);
         // <2> 角色标识的集合
         Set<String> rolePermission = sysPermissionService.getRolePermission(user);
         // <3> 权限集合

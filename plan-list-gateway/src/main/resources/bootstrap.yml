@@ -1,0 +1,22 @@
+server:
+  port: 9010
+spring:
+  profiles:
+    active: dev
+  main:
+    web-application-type: reactive
+  application:
+    name: plan-list-gateway
+
+# jwt 的配置
+jwt:
+  tokenHeader: Authorization
+  secret: bnt-secrt000001
+  expiration: 604800 #秒 7天
+  prefix: Bearer
+
+# 不用登录就可以访问的接口
+allowed:
+  gateway:
+    paths:
+      - /user/login/loginByPas

@@ -82,40 +82,40 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <!--在 execution 节点中配置当执行 mvn package 的时候，顺便也执行一下 docker:build-->
-                        <id>build-image</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <imageName>${project.artifactId}</imageName><!--镜像名-->
-                    <imageTags>
-                        <imageTag>latest</imageTag>
-                    </imageTags>
-                    <!--Dockerfile所在的目录-->
-                    <dockerDirectory>${project.basedir}</dockerDirectory>
-                    <!--docker所在的宿主机地址-->
-<!--                    <dockerHost>http://localhost:2375</dockerHost>-->
-                    <dockerHost>https://47.103.4.235:2375</dockerHost>
-                    <!--CA证书地址-->
-                    <dockerCertPath>D:\programming\证书\docker远程访问CA证书</dockerCertPath>
-                    <resources>
-                        <resource><!--这里配置的就是打包后jar所在的位置-->
-                            <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <include>${project.build.finalName}.jar</include>
-                        </resource>
-                    </resources>
-                </configuration>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>com.spotify</groupId>-->
+<!--                <artifactId>docker-maven-plugin</artifactId>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        &lt;!&ndash;在 execution 节点中配置当执行 mvn package 的时候，顺便也执行一下 docker:build&ndash;&gt;-->
+<!--                        <id>build-image</id>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>build</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--                <configuration>-->
+<!--                    <imageName>${project.artifactId}</imageName>&lt;!&ndash;镜像名&ndash;&gt;-->
+<!--                    <imageTags>-->
+<!--                        <imageTag>latest</imageTag>-->
+<!--                    </imageTags>-->
+<!--                    &lt;!&ndash;Dockerfile所在的目录&ndash;&gt;-->
+<!--                    <dockerDirectory>${project.basedir}</dockerDirectory>-->
+<!--                    &lt;!&ndash;docker所在的宿主机地址&ndash;&gt;-->
+<!--&lt;!&ndash;                    <dockerHost>http://localhost:2375</dockerHost>&ndash;&gt;-->
+<!--                    <dockerHost>https://47.103.4.235:2375</dockerHost>-->
+<!--                    &lt;!&ndash;CA证书地址&ndash;&gt;-->
+<!--                    <dockerCertPath>D:\programming\证书\docker远程访问CA证书</dockerCertPath>-->
+<!--                    <resources>-->
+<!--                        <resource>&lt;!&ndash;这里配置的就是打包后jar所在的位置&ndash;&gt;-->
+<!--                            <targetPath>/</targetPath>-->
+<!--                            <directory>${project.build.directory}</directory>-->
+<!--                            <include>${project.build.finalName}.jar</include>-->
+<!--                        </resource>-->
+<!--                    </resources>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 </project>

@@ -82,6 +82,7 @@ public class SysLoginService {
         // 用户不存在时默认注册
         if (user == null) {
             SysUser sysUser = new SysUser();
+            sysUser.setUserName(userName);
             sysUser.setPassword(SecurityUtils.encryptPassword(userPassword));
             sysUser.setCreateBy(userName);
             sysUserService.insert(sysUser);

@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class BaseResponse<T>{
 
-    private int code;
+    private Integer code;
 
     private T data;
 
@@ -21,7 +21,7 @@ public class BaseResponse<T>{
         // 默认构造函数
     }
 
-    public BaseResponse(int code, T data, String message) {
+    public BaseResponse(Integer code, T data, String message) {
         this.code = code;
         this.data = data;
         this.message = message;

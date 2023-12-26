@@ -16,7 +16,9 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/plan_list?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
     password: fivefu
-
+  data:
+    mongodb:
+      uri: mongodb://planlist:planlist@127.0.0.1:27017/plan_list
 seata:
   tx-service-group: my_test_tx_group
   enabled: true
@@ -44,3 +46,11 @@ mybatis-plus:
       logic-delete-value: 1 # 逻辑已删除值（默认为 1）
       logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）
   mapper-locations: classpath:mapper/*.xml
+
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          mongodb:
+            core: DEBUG # 打印 mongodb 操作的具体语句。生产环境下，不建议开启。

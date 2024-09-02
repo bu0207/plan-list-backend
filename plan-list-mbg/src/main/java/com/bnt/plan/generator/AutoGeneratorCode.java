@@ -24,7 +24,7 @@ public class AutoGeneratorCode {
      * 数据源配置
      */
     private static final DataSourceConfig.Builder DATA_SOURCE_CONFIG = new DataSourceConfig
-            .Builder("jdbc:mysql://localhost:3306/plan_list?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false", "root", "fivefu");
+            .Builder("jdbc:mysql://localhost:3306/plan_list?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false", "bnt", "bnt");
 
     public static void main(String[] args) {
         FastAutoGenerator.create(DATA_SOURCE_CONFIG)
